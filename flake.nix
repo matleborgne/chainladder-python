@@ -33,6 +33,7 @@
           nativeBuildInputs = with pkgs; [
             python3Packages.scikit-learn
             python3Packages.sparse
+            python3Packages.pandas
 #            appstream-glib
 #            pkg-config
            # python3
