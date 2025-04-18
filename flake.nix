@@ -25,15 +25,18 @@
 
         default = pkgs.python3Packages.buildPythonPackage rec {        
           name = "chainladder";
-          format = "setuptools";
           src = self;
+
+          format = "setuptools";
           pythonImportsCheck = [ "chainladder" ];
 
-#          nativeBuildInputs = with pkgs; [
+          nativeBuildInputs = python;
+
+          #with pkgs; [
 #            desktop-file-utils
 #            appstream-glib
 #            pkg-config
-#            python3
+           # python3
 #          ];
 #
 #          buildInputs = with pkgs; [
