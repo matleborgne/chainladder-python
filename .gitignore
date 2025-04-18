@@ -125,3 +125,7 @@ coverage_html_report
 
 # Random python test workbooks
 Untitled.ipynb
+
+# flake result
+result*
+result/
