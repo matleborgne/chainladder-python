@@ -23,7 +23,7 @@
     {
       packages = forAllSystems ({ pkgs, python }: {
 
-        default = pkgs.buildPythonPackage.mkDerivation rec {        
+        default = pkgs.python3Packages.buildPythonPackage rec {        
           name = "chainladder";
           src = self;
 
