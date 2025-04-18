@@ -30,8 +30,6 @@
           nativeBuildInputs = with pkgs; [
             desktop-file-utils
             appstream-glib
-            meson
-            ninja
             pkg-config
             python3
             wrapGAppsHook4
@@ -42,10 +40,10 @@
             haskellPackages.gi-gtk
           ];
 
-          preFixup = ''
-            wrapProgram $out/bin/video-downloader \
-              --prefix PYTHONPATH : ${python}/${python.sitePackages} \
-          '';
+#          preFixup = ''
+#            wrapProgram $out/bin/video-downloader \
+#              --prefix PYTHONPATH : ${python}/${python.sitePackages} \
+#          '';
 
         };
       });
