@@ -39,10 +39,10 @@
             haskellPackages.gi-gtk
           ];
 
-#          preFixup = ''
-#            wrapProgram $out/bin/video-downloader \
-#              --prefix PYTHONPATH : ${python}/${python.sitePackages} \
-#          '';
+          preFixup = ''
+            wrapProgram $out/bin/video-downloader \
+              --prefix PYTHONPATH : ${python}/${python.sitePackages} \
+          '';
 
         };
       });
