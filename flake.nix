@@ -30,14 +30,12 @@
           format = "setuptools";
           pythonImportsCheck = [ "chainladder" ];
 
-          nativeBuildInputs = python;
-
-          #with pkgs; [
-#            desktop-file-utils
+          nativeBuildInputs = with pkgs; [
+            python3Packages.scikit-learn
 #            appstream-glib
 #            pkg-config
            # python3
-#          ];
+          ];
 #
 #          buildInputs = with pkgs; [
 #            haskellPackages.gi-gdk
