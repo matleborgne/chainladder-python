@@ -32,7 +32,6 @@
             appstream-glib
             pkg-config
             python3
-            wrapGAppsHook4
           ];
 
           buildInputs = with pkgs; [
