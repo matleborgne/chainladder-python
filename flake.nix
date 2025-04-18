@@ -35,6 +35,7 @@
             python3Packages.sparse
             python3Packages.pandas
             python3Packages.dill
+            python3Packages.patsy
 
 #            appstream-glib
 #            pkg-config
