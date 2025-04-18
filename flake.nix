@@ -16,7 +16,7 @@
 
       forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system: f  {
         pkgs = import nixpkgs { inherit system; };
-        #python = with import nixpkgs { inherit system; }; python3.withPackages (ps: with ps; [ chainladder ]);
+        python = with import nixpkgs { inherit system; }; python3.withPackages (ps: with ps; [ chainladder ]);
       });
 
     in
