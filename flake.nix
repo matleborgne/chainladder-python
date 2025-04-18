@@ -16,7 +16,7 @@
 
       forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system: f  {
         pkgs = import nixpkgs { inherit system; };
-        python = with import nixpkgs { inherit system; }; python3.withPackages (ps: with ps; [ ]);
+        #python = with import nixpkgs { inherit system; }; python3.withPackages (ps: with ps; [ chainladder ]);
       });
 
     in
@@ -27,24 +27,21 @@
           name = "chainladder";
           src = self;
 
-          nativeBuildInputs = with pkgs; [
-            desktop-file-utils
-            appstream-glib
-            pkg-config
-            python3
-          ];
+#          nativeBuildInputs = with pkgs; [
+#            desktop-file-utils
+#            appstream-glib
+#            pkg-config
+#            python3
+#          ];
+#
+#          buildInputs = with pkgs; [
+#            haskellPackages.gi-gdk
+#            haskellPackages.gi-gtk
+#          ];
 
-          buildInputs = with pkgs; [
-            haskellPackages.gi-gdk
-            haskellPackages.gi-gtk
-          ];
-
-          preFixup = ''
-            wrapProgram $out/bin/video-downloader \
-              --prefix PYTHONPATH : ${python}/${python.sitePackages} \
-          '';
 
         };
+        
       });
     };
 }
