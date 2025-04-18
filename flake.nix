@@ -34,6 +34,8 @@
             python3Packages.scikit-learn
             python3Packages.sparse
             python3Packages.pandas
+            python3Packages.dill
+
 #            appstream-glib
 #            pkg-config
            # python3
