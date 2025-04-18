@@ -16,7 +16,7 @@
 
       forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system: f  {
         pkgs = import nixpkgs { inherit system; };
-        python = with import nixpkgs { inherit system; }; python3.withPackages (ps: with ps; [ sklearn-deap ]);
+        python = with import nixpkgs { inherit system; }; python3.withPackages (ps: with ps; [ scikit-learn ]);
       });
 
     in
