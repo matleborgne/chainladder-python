@@ -44,10 +44,14 @@
             python3Packages.patsy
             python3Packages.packaging
           ];
-
-
-        };
-        
+        };        
       });
+
+      overlays.default = final: prev: {
+        python312Packages = prev.python312.Packages // {
+          chainladder = final.callPackage self.packages.x86_64-linux.default {};
+        };
+      };
+      
     };
 }
