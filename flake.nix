@@ -25,7 +25,7 @@
 
     in
     {
-      packages = forAllSystems ({ pkgs, python, system }: {
+      packages = forAllSystems ({ pkgs, python, }: {
 
         default = pkgs.python312Packages.buildPythonPackage rec {        
           name = "chainladder";
@@ -49,7 +49,7 @@
 
       overlays.default = final: prev: {
         python312Packages = prev.python312.Packages // {
-          chainladder = self.packages.${prev.system}.default {};
+          chainladder = self.packages.x86_64-linux.default {};
         };
       };
       
