@@ -46,11 +46,11 @@
         };        
       });
 
-      overlays.default = final: prev: {
-        python3Packages = prev.python3Packages // {
-          chainladder = self.packages.x86_64-linux.default;
-        };
-      };
+#      overlays.default = final: prev: {
+#        python3Packages = prev.python3Packages // {
+#          chainladder = self.packages.x86_64-linux.default;
+#        };
+#      };
       
     };
 }
