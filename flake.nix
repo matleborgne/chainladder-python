@@ -47,7 +47,7 @@
         };        
       });
 
-      overlays.default = final: prev: {
+      overlays.default = final: prev: { pkgs, }: {
         python312Packages = prev.python312.Packages // {
           chainladder = self.packages.x86_64-linux.default {};
         };
