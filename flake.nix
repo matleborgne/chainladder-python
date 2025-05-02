@@ -27,28 +27,27 @@
     {
       packages = forAllSystems ({ pkgs, python, }: {
 
-        default = pkgs.python312Packages.buildPythonPackage rec {        
+        default = pkgs.python3Packages.buildPythonPackage rec {        
           name = "chainladder";
           src = self;
 
           format = "setuptools";
           pythonImportsCheck = [ "chainladder" ];
 
-          nativeBuildInputs = with pkgs; [
-            python3Packages.setuptools
-
-            python3Packages.scikit-learn
-            python3Packages.sparse
-            python3Packages.pandas
-            python3Packages.dill
-            python3Packages.patsy
-            python3Packages.packaging
+          nativeBuildInputs = with pkgs.python3Packages; [
+            setuptools
+            scikit-learn
+            sparse
+            pandas
+            dill
+            patsy
+            packaging
           ];
         };        
       });
 
       overlays.default = final: prev: {
-        python312Packages = prev.python312Packages // {
+        python3Packages = prev.python3Packages // {
           chainladder = self.packages.x86_64-linux.default;
         };
       };
