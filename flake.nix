@@ -2,10 +2,14 @@
   description = "casact/chainladder-python";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    };
+      
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, }@inputs:
+
     let
       allSystems = [
         "x86_64-linux"
@@ -23,7 +27,7 @@
     {
       packages = forAllSystems ({ pkgs, python }: {
 
-        default = pkgs.python3Packages.buildPythonPackage rec {        
+        default = pkgs.python312Packages.buildPythonPackage rec {        
           name = "chainladder";
           src = self;
 
@@ -31,22 +35,15 @@
           pythonImportsCheck = [ "chainladder" ];
 
           nativeBuildInputs = with pkgs; [
+            python3Packages.setuptools
+
             python3Packages.scikit-learn
             python3Packages.sparse
             python3Packages.pandas
             python3Packages.dill
             python3Packages.patsy
             python3Packages.packaging
-
-#            appstream-glib
-#            pkg-config
-           # python3
           ];
-#
-#          buildInputs = with pkgs; [
-#            haskellPackages.gi-gdk
-#            haskellPackages.gi-gtk
-#          ];
 
 
         };
