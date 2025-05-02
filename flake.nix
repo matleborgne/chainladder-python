@@ -2,40 +2,37 @@
   description = "casact/chainladder-python";
 
   inputs = {
-    nixpkgs = {
-      url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    };
-      
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, }@inputs:
+  outputs = { self, nixpkgs }:
 
     let
-      allSystems = [
-        "x86_64-linux"
-        #"aarch64-linux"
-        #"x86_64-darwin"
-        #"aarch64-darwin"
-      ];
+      allSystems = [ "x86_64-linux" ];
+      forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+          python = pkgs.python3;
+          pythonPackages = python.pkgs;
+        in f { inherit pkgs python pythonPackages; }
+      );
 
-      forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system: f  {
-        pkgs = import nixpkgs { inherit system; };
-        python = with import nixpkgs { inherit system; }; python3.withPackages (ps: with ps; [ scikit-learn ]);
-      });
-
-    in
-    {
-      packages = forAllSystems ({ pkgs, python, }: {
-
-        default = pkgs.python3Packages.buildPythonPackage rec {        
-          name = "chainladder";
+    in {
+      packages = forAllSystems ({ pkgs, python, pythonPackages }: {
+        default = pythonPackages.buildPythonPackage {
+          pname = "chainladder";
+          version = "0.1.0";
           src = self;
 
           format = "setuptools";
+
           pythonImportsCheck = [ "chainladder" ];
 
-          nativeBuildInputs = with pkgs.python3Packages; [
+          nativeBuildInputs = with pythonPackages; [
             setuptools
+          ];
+
+          propagatedBuildInputs = with pythonPackages; [
             scikit-learn
             sparse
             pandas
@@ -43,14 +40,7 @@
             patsy
             packaging
           ];
-        };        
+        };
       });
-
-#      overlays.default = final: prev: {
-#        python3Packages = prev.python3Packages // {
-#          chainladder = self.packages.x86_64-linux.default;
-#        };
-#      };
-      
     };
 }
