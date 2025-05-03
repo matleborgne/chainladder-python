@@ -22,6 +22,8 @@
         pkgs = import nixpkgs { inherit system; };
       });
 
+      wrapPrefix = if (!pkgs.stdenv.isDarwin) then "LD_LIBRARY_PATH" else "DYLD_LIBRARY_PATH";
+
     in
     {
       packages = forAllSystems ({ pkgs, python, }: {
