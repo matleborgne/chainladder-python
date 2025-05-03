@@ -22,7 +22,6 @@
         pkgs = import nixpkgs { inherit system; };
       });
 
-      wrapPrefix = if (!pkgs.stdenv.isDarwin) then "LD_LIBRARY_PATH" else "DYLD_LIBRARY_PATH";
 
     in
     {
@@ -46,7 +45,7 @@
           ];
 
           postBuild = ''
-            wrapProgram "$out/bin/python3.12" --prefix ${wrapPrefix} : "${pythonldlibpath}"
+            wrapProgram "$out/bin/python3.12" --prefix "LD_LIBRARY_PATH" : "${pythonldlibpath}"
           '';
 
         };        
