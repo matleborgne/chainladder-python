@@ -2,37 +2,39 @@
   description = "casact/chainladder-python";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    };
+      
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, }@inputs:
 
     let
-      allSystems = [ "x86_64-linux" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-          python = pkgs.python3;
-          pythonPackages = python.pkgs;
-        in f { inherit pkgs python pythonPackages; }
-      );
+      allSystems = [
+        "x86_64-linux"
+        #"aarch64-linux"
+        #"x86_64-darwin"
+        #"aarch64-darwin"
+      ];
 
-    in {
-      packages = forAllSystems ({ pkgs, python, pythonPackages }: {
-        default = pythonPackages.buildPythonPackage {
-          pname = "chainladder";
-          version = "0.8.24";
-          src = ./.;
+      forAllSystems = f: nixpkgs.lib.genAttrs allSystems (system: f  {
+        pkgs = import nixpkgs { inherit system; };
+      });
+
+    in
+    {
+      packages = forAllSystems ({ pkgs, python, }: {
+
+        default = pkgs.python312Packages.buildPythonPackage rec {        
+          name = "chainladder";
+          src = self;
 
           format = "setuptools";
-
           pythonImportsCheck = [ "chainladder" ];
 
-          nativeBuildInputs = with pythonPackages; [
+          nativeBuildInputs = with pkgs.python3Packages; [
             setuptools
-          ];
-
-          propagatedBuildInputs = with pythonPackages; [
             scikit-learn
             sparse
             pandas
@@ -40,7 +42,14 @@
             patsy
             packaging
           ];
-        };
+
+          postBuild = ''
+            wrapProgram "$out/bin/python3.12" --prefix ${wrapPrefix} : "${pythonldlibpath}"
+          '';
+
+        };        
       });
+
+      
     };
 }
