@@ -25,9 +25,9 @@
 
     in
     {
-      packages = forAllSystems ({ pkgs, python, }: {
+      packages = forAllSystems ({ pkgs, }: {
 
-        default = pkgs.python312Packages.buildPythonPackage rec {        
+        default = pkgs.python3Packages.buildPythonPackage rec {        
           name = "chainladder";
           src = self;
 
@@ -44,9 +44,6 @@
             packaging
           ];
 
-          postBuild = ''
-            wrapProgram "$out/bin/python3.12" --prefix "LD_LIBRARY_PATH" : "${pythonldlibpath}"
-          '';
 
         };        
       });
