@@ -21,8 +21,8 @@
       packages = forAllSystems ({ pkgs, python, pythonPackages }: {
         default = pythonPackages.buildPythonPackage {
           pname = "chainladder";
-          version = "0.1.0";
-          src = self;
+          version = "0.8.24";
+          src = ./.;
 
           format = "setuptools";
 
